@@ -62,6 +62,7 @@ class FunctionHandler:
         self.function_registry.register_function("get_time")
         self.function_registry.register_function("get_lunar")
         self.function_registry.register_function("handle_speaker_volume_or_screen_brightness")
+        self.function_registry.register_function("handle_emergency_rescue")
 
     def register_config_functions(self):
         """注册配置中的函数,可以不同客户端使用不同的配置"""

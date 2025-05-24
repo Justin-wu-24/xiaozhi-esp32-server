@@ -54,7 +54,8 @@ class IntentProvider(IntentProviderBase):
         prompt = (
             "你是一个意图识别助手。请分析用户的最后一句话，判断用户意图并调用相应的函数。\n\n"
             "- 如果用户使用疑问词（如'怎么'、'为什么'、'如何'）询问退出相关的问题（例如'怎么退出了？'），注意这不是让你退出，请返回 {'function_call': {'name': 'continue_chat'}\n"
-            "- 仅当用户明确使用'退出系统'、'结束对话'、'我不想和你说话了'等指令时，才触发 handle_exit_intent\n\n"
+            "- 仅当用户明确使用'退出系统'、'结束对话'、'我不想和你说话了'等指令时，才触发 handle_exit_intent\n"
+            "- 当用户表达需要开始抢救病人或进入抢救模式时（如'开始抢救'、'进入抢救模式'、'启动抢救'等），触发 handle_emergency_rescue\n\n"
             f"{functions_desc}\n"
             "处理步骤:\n"
             "1. 分析用户输入，确定用户意图\n"
@@ -76,13 +77,16 @@ class IntentProvider(IntentProviderBase):
             '返回: {"function_call": {"name": "handle_exit_intent", "arguments": {"say_goodbye": "goodbye"}}}\n'
             "```\n"
             "```\n"
+            "用户: 开始抢救病人\n"
+            '返回: {"function_call": {"name": "handle_emergency_rescue", "arguments": {"response_message": "已启动抢救模式，正在通知相关人员。"}}}\n'
+            "```\n"
+            "```\n"
             "用户: 你好啊\n"
             '返回: {"function_call": {"name": "continue_chat"}}\n'
             "```\n\n"
             "注意：\n"
             "1. 只返回JSON格式，不要包含任何其他文字\n"
             '2. 如果没有找到匹配的函数，返回{"function_call": {"name": "continue_chat"}}\n'
-            "3. 确保返回的JSON格式正确，包含所有必要的字段\n"
         )
         return prompt
 
